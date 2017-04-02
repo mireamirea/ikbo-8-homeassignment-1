@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define Stack_max 375
+
+typedef struct{
+    int elem[Stack_max];
+    int numb;
+} Stack_t;
+
+void init( Stack_t* s ){
+    s->numb = 0;
+}
+
+void push( Stack_t* s, int newElem){
+    if (s->numb < Stack_max){
+        s->elem[s->numb] = newElem;
+        s->numb++;
+    }
+    else
+        exit(-1);
+}
+
+void pop( Stack_t* s ){
+    if (s->numb > 0){
+        s->numb--;
+        s->elem[s->numb] = 0;
+    }
+    else
+        exit(-1);
+}
+
+int take( Stack_t* s ){
+    if (s->numb > 0)
+        return s->elem[s->numb - 1];
+    else
+        exit(-1);
+}
+
+int ifEmpty( Stack_t* s ){
+    if (s->numb > 0)
+        return 0;
+    else
+        return 1;
+}
+
+void printStack( Stack_t* s ){
+    if (s->numb > 0){
+        int i;
+        for(i = 1; i <= s->numb; i++){
+            printf("%d element = %d\n", i, s->elem[i-1]);
+        }
+    }
+    else
+        printf("Stack is empty\n");
+}
+
+int main(){
+    Stack_t s;
+    init(&s);
+    push(&s, 13);
+    push(&s, 45);
+    push(&s, 10);
+    printStack(&s);
+    pop(&s);
+    pop(&s);
+    pop(&s);
+    if (ifEmpty(&s) == 1)
+        printStack(&s);
+    return 0;
+}
