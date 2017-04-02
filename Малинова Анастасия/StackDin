@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    int* elem;
+    int numb;
+} Stack_t;
+
+void init( Stack_t* s ){
+    s->elem = (int*)malloc(sizeof(int));
+    s->numb = 0;
+}
+
+void push( Stack_t* s, int newElem){
+    s->elem = realloc(s->elem, (s->numb + 1)*sizeof(int));
+    s->elem[s->numb] = newElem;
+    s->numb++;
+}
+
+void pop( Stack_t* s ){
+    if (s->numb > 0){
+        s->elem = realloc(s->elem, (s->numb - 1)*sizeof(int));
+        s->numb--;
+    }
+    else
+        exit(-1);
+}
+
+int take( Stack_t* s ){
+    if (s->numb > 0)
+        return s->elem[s->numb - 1];
+    else
+        exit(-1);
+}
+
+int ifEmpty( Stack_t* s ){
+    if (s->numb > 0)
+        return 0;
+    else
+        return 1;
+}
+
+void printStack( Stack_t* s ){
+    if (s->numb > 0){
+        int i;
+        for(i = 1; i <= s->numb; i++){
+            printf("%d element = %d\n", i, s->elem[i-1]);
+        }
+    }
+    else
+        printf("Stack is empty\n");
+}
+
+int main(){
+    Stack_t* s = (Stack_t*)malloc(sizeof(Stack_t));
+    init(s);
+    push(s, 13);
+    push(s, 45);
+    push(s, 10);
+    printStack(s);
+    pop(s);
+    pop(s);
+    pop(s);
+    if (ifEmpty(s) == 1)
+        printStack(s);
+    return 0;
+}
